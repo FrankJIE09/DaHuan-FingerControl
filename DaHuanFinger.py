@@ -114,7 +114,7 @@ if __name__ == "__main__":
     cs.setForce(20)
     cs.setPosition(500)
     time.sleep(0.1)
-    # time.sleep(2)
+    time.sleep(2)
     time.sleep(0.1)
     # for i in range(10):
     #     cs.setForce(100)
