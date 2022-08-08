@@ -18,4 +18,4 @@
 ![img.png](pdfInfor/img.png)
 ![img_1.png](pdfInfor/img_1.png)
 
-上表功能一一对应[DaHuanFinger.py](/DaHuanFinger.py)中ComSwitch中函数。
+上表功能一一对应[DaHuanFinger.py](/AG-95Control.py)中ComSwitch中函数。
