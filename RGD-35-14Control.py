@@ -85,14 +85,16 @@ if __name__ == "__main__":
     cs.HandInit()
     cs.InitFeedback()
     time.sleep(0.2)
-    cs.RotateForce(20)
+    # cs.RotateForce(20)
+    cs.RotateVelocity(5)
+    time.sleep(0.5)
     setTime = 3
     BTime = time.time()
     num = 0
     while time.time() - BTime < setTime:
-        cs.AbsoluteRotate(-3600, )
+        cs.AbsoluteRotate(-200)
         re.RTRotateAngle()
-        cs.AbsoluteRotate(360)
+        cs.RelativeRotate(20)
         re.RTRotateAngle()
         num = num + 1
     print(setTime / (2 * num))

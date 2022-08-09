@@ -38,7 +38,9 @@ class ControlRoot(object):
             if ValueHex.__len__() <= 5:
                 array = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, 0x00, Value]
                 currentValueQ, currentValueH = self.calCrc(array)
-                setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, 0x00, Value, currentValueQ,
+                setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, 0x00,
+                               int('0x' + (Value.to_bytes(1, byteorder='little', signed=True).hex()), 16),
+                               currentValueQ,
                                currentValueH]
             elif ValueHex.__len__() == 6:
                 ValueHex = hex(Value)
