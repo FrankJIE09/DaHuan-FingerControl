@@ -16,7 +16,7 @@ class ControlRoot(object):
     def calCrc(self, array):
         bytes_ = b''
         for i in range(array.__len__()):
-            bytes_ = bytes_ + array[i].to_bytes(1, byteorder='little', signed=True)
+            bytes_ = bytes_ + array[i].to_bytes(1, byteorder='big', signed=True)
         crc = hex(self.crc16(bytes_))
         crcQ = '0x' + crc[-2] + crc[-1]
         crcH = '0x' + crc[-4] + crc[-3]
@@ -34,56 +34,18 @@ class ControlRoot(object):
         else:
             SetAddress = 0x03
         if Value < 0:
-            ValueHex = hex(Value)
-            if ValueHex.__len__() <= 5:
-                array = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, 0x00, Value]
-                currentValueQ, currentValueH = self.calCrc(array)
-                setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, 0x00,
-                               int('0x' + (Value.to_bytes(1, byteorder='little', signed=True).hex()), 16),
-                               currentValueQ,
-                               currentValueH]
-            elif ValueHex.__len__() == 6:
-                ValueHex = hex(Value)
-                ValueHexQ = int(ValueHex[0] + ValueHex[1] + ValueHex[2] + ValueHex[3], 16) - 1
-                ValueHexH = int(ValueHex[0] + ValueHex[1] + ValueHex[2] + ValueHex[-2] + ValueHex[-1],
-                                16) - 1
-                array = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, ValueHexQ, ValueHexH]
-                currentValueQ, currentValueH = self.calCrc(array)
-                setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress,
-                               int('0x' + (ValueHexQ.to_bytes(1, byteorder='little', signed=True).hex()), 16),
-                               int('0x' + ValueHexH.to_bytes(1, byteorder='little', signed=True).hex(), 16),
-                               currentValueQ,
-                               currentValueH]
-            else:
-                ValueHex = hex(Value)
-                ValueHexQ = int(ValueHex[0] + ValueHex[1] + ValueHex[2] + ValueHex[3] + ValueHex[4],
-                                16) - 1
-                ValueHexH = int(ValueHex[0] + ValueHex[1] + ValueHex[2] + ValueHex[-2] + ValueHex[-1],
-                                16) - 1
-                array = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, ValueHexQ, ValueHexH]
-                currentValueQ, currentValueH = self.calCrc(array)
-                setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress,
-                               int('0x' + (ValueHexQ.to_bytes(1, byteorder='little', signed=True).hex()), 16),
-                               int('0x' + ValueHexH.to_bytes(1, byteorder='little', signed=True).hex(), 16),
-                               currentValueQ,
-                               currentValueH]
-
-        else:
-            ValueHex = hex(Value)
-            if ValueHex.__len__() <= 4:
-                array = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, 0x00, Value]
-                currentValueQ, currentValueH = self.calCrc(array)
-                setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, 0x00, Value, currentValueQ,
-                               currentValueH]
-            else:
-                ValueHex = hex(Value)
-                ValueHexQ = int(ValueHex[0] + ValueHex[1] + ValueHex[2], 16)
-                ValueHexH = int(ValueHex[0] + ValueHex[1] + ValueHex[-2] + ValueHex[-1], 16)
-                array = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, ValueHexQ, ValueHexH]
-                currentValueQ, currentValueH = self.calCrc(array)
-                setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, ValueHexQ, ValueHexH,
-                               currentValueQ,
-                               currentValueH]
+            pass
+        Value = Value if Value >= 0 else Value - 1
+        bytes_ = Value.to_bytes(2, byteorder='big', signed=True)
+        ValueHexQ = int.from_bytes(bytes_[0:1], byteorder='big', signed=True)
+        ValueHexH = int.from_bytes(bytes_[1:2], byteorder='big', signed=True)
+        array = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, ValueHexQ, ValueHexH]
+        currentValueQ, currentValueH = self.calCrc(array)
+        setValueCmd = [0x01, SetAddress, ModbusHighAddress, ModbusLowAddress, ValueHexQ, ValueHexH,
+                       currentValueQ,
+                       currentValueH]
+        for i in range(setValueCmd.__len__()):
+            setValueCmd[i] = setValueCmd[i] if setValueCmd[i] >= 0 else setValueCmd[i] + 256
         self.sc.write(setValueCmd)
         if isReadSerial:
             back = self.readSerial()

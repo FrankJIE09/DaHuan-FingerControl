@@ -94,7 +94,7 @@ if __name__ == "__main__":
     while time.time() - BTime < setTime:
         cs.AbsoluteRotate(-200)
         re.RTRotateAngle()
-        cs.RelativeRotate(20)
+        cs.RelativeRotate(-360)
         re.RTRotateAngle()
         num = num + 1
     print(setTime / (2 * num))
