@@ -33,8 +33,6 @@ class ControlRoot(object):
             SetAddress = 0x06
         else:
             SetAddress = 0x03
-        if Value < 0:
-            pass
         Value = Value if Value >= 0 else Value - 1
         bytes_ = Value.to_bytes(2, byteorder='big', signed=True)
         ValueHexQ = int.from_bytes(bytes_[0:1], byteorder='big', signed=True)
@@ -47,6 +45,7 @@ class ControlRoot(object):
         for i in range(setValueCmd.__len__()):
             setValueCmd[i] = setValueCmd[i] if setValueCmd[i] >= 0 else setValueCmd[i] + 256
         self.sc.write(setValueCmd)
+
         if isReadSerial:
             back = self.readSerial()
             value = int.from_bytes(back[3:5], byteorder='big', signed=True)
