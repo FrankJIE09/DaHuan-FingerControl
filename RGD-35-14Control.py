@@ -62,11 +62,9 @@ class SetCmd(object):
         while back == 0:
             self.HandInit()
             back = self.Hand.sendCmd(ModbusHighAddress=0x02, ModbusLowAddress=0x00, isSet=False)
-            print(back)
         while back == 2:
             time.sleep(0.1)
             back = self.Hand.sendCmd(ModbusHighAddress=0x02, ModbusLowAddress=0x00, isSet=False)
-            print(back)
 
 
 class ReadStatus(object):
@@ -90,13 +88,18 @@ if __name__ == "__main__":
     time.sleep(0.5)
     setTime = 3
     BTime = time.time()
-    num = 0
-    while time.time() - BTime < setTime:
-        cs.AbsoluteRotate(-200)
-        re.RTRotateAngle()
-        cs.RelativeRotate(360)
-        re.RTRotateAngle()
-        num = num + 1
-    print(setTime / (2 * num))
-    # cs.setPosition(300)
-    # cs.setForce(20)
+    cs.Position(799)
+    time.sleep(1)
+
+    cs.Position(200)
+
+    time.sleep(1)
+    # while time.time() - BTime < setTime:
+    #     cs.AbsoluteRotate(-200)
+    #     re.RTRotateAngle()
+    #     cs.RelativeRotate(360)
+    #     re.RTRotateAngle()
+    #     num = num + 1
+    # print(setTime / (2 * num))
+    # # cs.setPosition(300)
+    # # cs.setForce(20)

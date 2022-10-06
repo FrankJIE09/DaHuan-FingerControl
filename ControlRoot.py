@@ -17,10 +17,10 @@ class ControlRoot(object):
         bytes_ = b''
         for i in range(array.__len__()):
             bytes_ = bytes_ + array[i].to_bytes(1, byteorder='big', signed=True)
-        crc = hex(self.crc16(bytes_))
-        crcQ = '0x' + crc[-2] + crc[-1]
-        crcH = '0x' + crc[-4] + crc[-3]
-        return int(crcQ.encode(), 16), int(crcH.encode(), 16)
+        crc = self.crc16(bytes_).to_bytes(2, byteorder='big', signed=False)
+        crcH = int.from_bytes(crc[0:1], byteorder='big', signed=False)
+        crcQ = int.from_bytes(crc[1:2], byteorder='big', signed=False)
+        return crcQ, crcH
 
     def readSerial(self):
         # BTime = time.time()
