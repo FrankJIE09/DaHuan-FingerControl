@@ -14,6 +14,7 @@
 > reboot
 #### 安装必要项
 > pip install crcmod
+> pip install pyserial
 ### 使用
 ![img.png](pdfInfor/img.png)
 ![img_1.png](pdfInfor/img_1.png)
