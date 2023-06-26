@@ -83,23 +83,7 @@ if __name__ == "__main__":
     cs.HandInit()
     cs.InitFeedback()
     time.sleep(0.2)
-    # cs.RotateForce(20)
     cs.RotateVelocity(50)
     time.sleep(0.5)
-    setTime = 3
-    BTime = time.time()
     cs.Position(799)
-    time.sleep(1)
 
-    cs.Position(200)
-
-    time.sleep(1)
-    # while time.time() - BTime < setTime:
-    #     cs.AbsoluteRotate(-200)
-    #     re.RTRotateAngle()
-    #     cs.RelativeRotate(360)
-    #     re.RTRotateAngle()
-    #     num = num + 1
-    # print(setTime / (2 * num))
-    # # cs.setPosition(300)
-    # # cs.setForce(20)
