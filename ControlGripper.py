@@ -1,11 +1,7 @@
-'''
-
-'''
+#  This is a program to send command to DaHuan grippers. Created by Frank.
 import serial
 import time
 import crcmod
-import threading
-from tqdm import *
 from ControlRoot import ControlRoot
 
 
@@ -57,6 +53,7 @@ class SetCmd(object):
         isRange(cmd, -32768, 32767)
         self.Hand.sendCmd(ModbusHighAddress=0x01, ModbusLowAddress=0x09, Value=cmd)
 
+    # 初始化反馈处理
     def InitFeedback(self):
         back = self.Hand.sendCmd(ModbusHighAddress=0x02, ModbusLowAddress=0x00, isSet=False)
         while back == 0:
@@ -67,6 +64,7 @@ class SetCmd(object):
             back = self.Hand.sendCmd(ModbusHighAddress=0x02, ModbusLowAddress=0x00, isSet=False)
 
 
+# 读取状态
 class ReadStatus(object):
     def __init__(self, ControlInstance=ControlRoot()):
         self.Hand = ControlInstance
@@ -86,4 +84,3 @@ if __name__ == "__main__":
     cs.RotateVelocity(50)
     time.sleep(0.5)
     cs.Position(799)
-
