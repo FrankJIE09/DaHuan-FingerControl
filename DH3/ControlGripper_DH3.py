@@ -40,14 +40,14 @@ if __name__ == "__main__":
     cs.Force(10)
     time.sleep(0.2)
 
-    cs.Position(10)
+    cs.Position(0)
     time.sleep(0.2)
 
-    cs.angle(50)
+    cs.angle(90)
     time.sleep(2)
-
-    cs.Position(95)
-    time.sleep(0.2)
-
-    cs.angle(0)
-    time.sleep(0.2)
+    #
+    # cs.Position(95)
+    # time.sleep(0.2)
+    #
+    # cs.angle(0)
+    # time.sleep(0.2)
