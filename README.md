@@ -32,4 +32,6 @@
 
 上表功能一一对应[DaHuanFinger.py](/ControlRoot.py)中SetCmd中函数。
 ## DH3控制视频
-[DH3ControlVideo.mp4](DH3%2FDH3ControlVideo.mp4)
+<video controls>
+  <source src="DH3/DH3ControlVideo.mp4" type="video/mp4">
+</video>
