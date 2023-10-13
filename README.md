@@ -13,7 +13,7 @@
 >*    ubuntu
 ### 配置
 #### 打开串口权限
->sudo chmod 777 /dev/ttyUSB0 
+>sudo chmod 777 /dev/ttyUSB0 #针对通讯盒使用sudo chmod 777 /dev/ttyACM0
 > 
 >sudo usermod -aG　dialout {userName}
 > 
@@ -24,10 +24,12 @@
 ## 使用
 
 >* 确保硬件设备正确连接，串口通讯端口正确设置。
->*    运行ControlGripper.py程序。测试运行。
+>*    运行ControlGripper.py程序。测试运行。(DH3使用)
 >*    根据实际需求，调用相关的命令实现夹爪控制。
 
 ![img.png](pdfInfor/img.png)
 ![img_1.png](pdfInfor/img_1.png)
 
 上表功能一一对应[DaHuanFinger.py](/ControlRoot.py)中SetCmd中函数。
+## DH3控制视频
+[DH3ControlVideo.mp4](DH3%2FDH3ControlVideo.mp4)
