@@ -31,7 +31,5 @@
 ![img_1.png](pdfInfor/img_1.png)
 
 上表功能一一对应[DaHuanFinger.py](/ControlRoot.py)中SetCmd中函数。
-## DH3控制视频
-<video controls>
-  <source src="DH3/DH3ControlVideo.mp4" type="video/mp4">
-</video>
+## DH3控制演示
+![DH3Control.gif](DH3%2FDH3Control.gif)
