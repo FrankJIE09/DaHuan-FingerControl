@@ -2,7 +2,7 @@
 import serial
 import time
 import crcmod
-from ControlRoot import ControlRoot
+from AG.ControlRoot import ControlRoot
 
 
 def isRange(value, min_, max_):
@@ -16,7 +16,7 @@ class SetCmd(object):
 
     # 初始化夹爪
     def HandInit(self):
-        self.Hand.sendCmd(ModbusHighAddress=0x01, ModbusLowAddress=0x00, Value=1)
+        self.Hand.sendCmd(ModbusHighAddress=0x01, ModbusLowAddress=0x00, Value=165)
 
     # 力值
     def Force(self, value):
@@ -78,9 +78,11 @@ if __name__ == "__main__":
     CR = ControlRoot()
     cs = SetCmd(CR)
     re = ReadStatus(CR)
-    cs.HandInit()
-    cs.InitFeedback()
+    # cs.HandInit()
+    # cs.InitFeedback()
     time.sleep(0.2)
-    cs.RotateVelocity(50)
+    # cs.RotateVelocity(50)
     time.sleep(0.5)
-    cs.Position(799)
+    cs.Position(1000)
+    # time.sleep(0.5)
+    # cs.Position(0)

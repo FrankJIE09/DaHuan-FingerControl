@@ -20,12 +20,14 @@ class ControlRoot(object):
         crcH = int.from_bytes(crc[0:1], byteorder='big', signed=False)
         crcQ = int.from_bytes(crc[1:2], byteorder='big', signed=False)
         return crcQ, crcH
+
     # 读取串口接收的数据
     def readSerial(self):
         # BTime = time.time()
-        time.sleep(0.008)
+        time.sleep(0.08)
         readContent = self.sc.read_all()
         return readContent
+
     # 发送指令
     def sendCmd(self, ModbusHighAddress, ModbusLowAddress, Value=0x01, isSet=True, isReadSerial=True):
         if isSet:
@@ -46,11 +48,11 @@ class ControlRoot(object):
         self.sc.write(setValueCmd)
 
         if isReadSerial:
-            back = self.readSerial() # 读取串口返回的数据
+            back = self.readSerial()  # 读取串口返回的数据
             value = int.from_bytes(back[3:5], byteorder='big', signed=True)
             if value < 0:
                 value = value + 1
-            self.sc.flush() # 清空串口接收缓存
+            self.sc.flush()  # 清空串口接收缓存
             return value
         else:
             time.sleep(0.005)
