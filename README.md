@@ -15,7 +15,7 @@
 #### 打开串口权限
 >sudo chmod 777 /dev/ttyUSB0 #针对通讯盒使用sudo chmod 777 /dev/ttyACM0
 > 
->sudo usermod -aG　dialout {userName}
+>sudo usermod -aG dialout {userName}
 > 
 > reboot
 #### 安装必要项
