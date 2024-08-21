@@ -56,5 +56,5 @@ class ControlRoot(object):
             self.serial_conn.flush()  # 清空串口接收缓存
             return response_value
         else:
-            time.sleep(0.005)  # 等待0.005秒
+            time.sleep(0.01)  # 等待0.005秒
             return

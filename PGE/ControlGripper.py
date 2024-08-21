@@ -2,8 +2,8 @@
 import serial  # 导入串口通信库
 import time  # 导入时间库，用于控制延时
 import crcmod  # 导入crcmod库，用于计算校验和
-from ControlRoot import ControlRoot  # 从ControlRoot模块导入ControlRoot类
 import random  # 导入random模块
+from ControlRoot import ControlRoot
 
 
 # 定义函数检查值是否在指定范围内
@@ -18,9 +18,16 @@ class SetCommand(object):
         self.gripper = control_instance  # 初始化ControlInstance并赋值给gripper
 
     # 初始化夹爪
-    def initialize_gripper(self):
+    def initialize_gripper(self,blocking=True):
         self.gripper.send_command(modbus_high_address=0x01, modbus_low_address=0x00, value=165)  # 发送初始化命令
-
+        if blocking:
+            # 阻塞模式：等待位置到达目标值
+            while True:
+                current_status = self.gripper.send_command(modbus_high_address=0x02, modbus_low_address=0x00,
+                                                             is_set=False)
+                if current_status == 1:
+                    break
+                time.sleep(0.01)  # 小延时以防止过度占用CPU
     # 设置力值
     def set_force(self, value):
         check_range(value, 20, 100)  # 检查力值是否在20到100之间
@@ -39,6 +46,7 @@ class SetCommand(object):
                 if current_position == value:
                     break
                 time.sleep(0.01)  # 小延时以防止过度占用CPU
+                self.gripper.send_command(modbus_high_address=0x01, modbus_low_address=0x03, value=value)
 
     # 设置速度
     def set_velocity(self, value):
@@ -98,12 +106,10 @@ if __name__ == "__main__":
 
     set_command = SetCommand(control_root)  # 创建SetCommand实例
     read_status = ReadStatus(control_root)  # 创建ReadStatus实例
-    # set_command.initialize_gripper()  # 初始化夹爪
+    set_command.initialize_gripper()  # 初始化夹爪
 
     # 100次循环实验
-    for i in range(100):
+    for i in range(2):
         random_position = random.randint(0, 1000)  # 生成0到1000之间的随机位置
-        print(f"实验 {i+1} 次 - 设置随机位置为 {random_position}")
+        print(f"实验 {i + 1} 次 - 设置随机位置为 {random_position}")
         set_command.set_position(random_position, blocking=True)  # 设置随机位置并等待到达
-
-
