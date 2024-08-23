@@ -47,6 +47,8 @@ class SetCommand(object):
                     break
                 time.sleep(0.01)  # 小延时以防止过度占用CPU
                 self.gripper.send_command(modbus_high_address=0x01, modbus_low_address=0x03, value=value)
+        else:
+            time.sleep(0.5)
 
     # 设置速度
     def set_velocity(self, value):
