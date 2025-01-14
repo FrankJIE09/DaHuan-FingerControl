@@ -7,7 +7,7 @@ import crcmod
 
 class ControlRoot(object):
     # 初始化串口
-    def __init__(self, com="/dev/ttyUSB0"):
+    def __init__(self, com="/dev/ttyUSB0"): # com="COM3" /dev/ttyUSB0
         self.sc = serial.Serial(port=com, baudrate=115200)
         self.crc16 = crcmod.mkCrcFun(0x18005, rev=True, initCrc=0xFFFF, xorOut=0x0000)
 
