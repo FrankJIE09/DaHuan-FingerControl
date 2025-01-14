@@ -33,3 +33,6 @@
 上表功能一一对应[DaHuanFinger.py](/AG/ControlRoot.py)中SetCmd中函数。
 ## DH3控制演示
 ![DH3Control.gif](DH3%2FDH3Control.gif)
+
+## RGI控制演示
+![RGIControl.gif](RGI%2Frgi.gif)
