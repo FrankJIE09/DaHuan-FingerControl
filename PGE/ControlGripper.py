@@ -14,7 +14,7 @@ def check_range(value, min_value, max_value):
 
 # 定义SetCommand类，用于设置夹爪的命令
 class SetCommand(object):
-    def __init__(self, control_instance=ControlRoot()):
+    def __init__(self, control_instance):
         self.gripper = control_instance  # 初始化ControlInstance并赋值给gripper
 
     # 初始化夹爪
@@ -91,23 +91,13 @@ class SetCommand(object):
                                                  is_set=False)  # 再次发送反馈命令
 
 
-# 读取状态的类
-class ReadStatus(object):
-    def __init__(self, control_instance=ControlRoot()):
-        self.gripper = control_instance  # 初始化ControlInstance并赋值给gripper
-
-    # 读取旋转角度
-    def read_rotation_angle(self):
-        response = self.gripper.send_command(modbus_high_address=0x02, modbus_low_address=0x08,
-                                             is_set=False)  # 发送读取旋转角度命令
-        print(response)  # 打印反馈值
 
 
 if __name__ == "__main__":
     control_root = ControlRoot()  # 创建ControlRoot实例
 
     set_command = SetCommand(control_root)  # 创建SetCommand实例
-    read_status = ReadStatus(control_root)  # 创建ReadStatus实例
+    # read_status = ReadStatus(control_root)  # 创建ReadStatus实例
     set_command.initialize_gripper()  # 初始化夹爪
 
     # 100次循环实验

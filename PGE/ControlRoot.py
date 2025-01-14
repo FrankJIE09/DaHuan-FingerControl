@@ -7,7 +7,7 @@ import crcmod  # 导入crcmod库，用于计算CRC校验码
 # 定义ControlRoot类，用于管理串口通信
 class ControlRoot(object):
     # 初始化串口
-    def __init__(self, port="/dev/ttyUSB0"):
+    def __init__(self, port="COM7"):
         self.serial_conn = serial.Serial(port=port, baudrate=115200)  # 打开串口，设置波特率为115200
         self.crc16_func = crcmod.mkCrcFun(0x18005, rev=True, initCrc=0xFFFF, xorOut=0x0000)  # 初始化CRC16校验函数
 
